@@ -10,3 +10,7 @@ bit 0 : need stop all , somebody want stop
 bit 1 ~ 63 : use for each go routine
 
 can use max 63 goroutine
+
+korean discription 
+
+	http://kasw.blogspot.kr/2015/03/go-goroutine-group.html
