@@ -6,57 +6,20 @@
 package runstate
 
 import (
-	"fmt"
-	"sync/atomic"
+	"github.com/kasworld/bits64"
 )
 
-type RunState uint64
+type RunState struct {
+	bits64.Bits64
+}
 
 func New() *RunState {
 	return new(RunState)
 }
 
-func (rs RunState) String() string {
-	return fmt.Sprintf("0b%0b", rs)
-}
-
-func (rs *RunState) SetBit(n uint) {
-	var success bool
-	for !success {
-		oldval := atomic.LoadUint64((*uint64)(rs))
-		newval := oldval | (1 << n)
-		success = atomic.CompareAndSwapUint64((*uint64)(rs), oldval, newval)
-	}
-}
-
-func (rs *RunState) ClearBit(n uint) {
-	var success bool
-	for !success {
-		oldval := atomic.LoadUint64((*uint64)(rs))
-		newval := oldval &^ (1 << n)
-		success = atomic.CompareAndSwapUint64((*uint64)(rs), oldval, newval)
-	}
-}
-
-func (rs *RunState) NegBit(n uint) {
-	var success bool
-	for !success {
-		oldval := atomic.LoadUint64((*uint64)(rs))
-		newval := oldval ^ (1 << n)
-		success = atomic.CompareAndSwapUint64((*uint64)(rs), oldval, newval)
-	}
-}
-
-func (rs *RunState) GetBit(n uint) bool {
-	val := atomic.LoadUint64((*uint64)(rs)) & (1 << n)
-	return val != 0
-}
-
-//
-
 // all clear
 func (rs *RunState) CanRun() bool {
-	return atomic.LoadUint64((*uint64)(rs)) == 0
+	return rs.GetUint64() == 0
 }
 
 // bit 0 set

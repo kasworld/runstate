@@ -11,6 +11,10 @@ bit 1 ~ 63 : use for each go routine
 
 can use max 63 goroutine
 
+## requirements 
+
+    "github.com/kasworld/bits64"
+
 korean discription 
 
 	http://kasw.blogspot.kr/2015/03/go-goroutine-group.html
